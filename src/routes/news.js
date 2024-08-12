@@ -25,7 +25,6 @@ newsRouter.get('', async(req, res) => {
 
  newsRouter.get('/category/:cat', async(req, res) => {
     let cat0 = req.params.cat
-   console.log(cat0);
    try {
         const newsAPI = await axios.get(`https://diey8xpfs90ha.cloudfront.net/wp-json/wp/v2/posts?_embed&categories=${cat0}&per_page=100&page=1`)
         res.render('news', { articles : newsAPI.data })
