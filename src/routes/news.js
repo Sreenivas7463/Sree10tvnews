@@ -2,11 +2,34 @@ const express = require('express')
 const newsRouter = express.Router()
 const axios = require('axios')
 
-
 newsRouter.get('', async(req, res) => {
+   
+    try {
+         const newsAPI = await axios.get(`https://diey8xpfs90ha.cloudfront.net/wp-json/wp/v2/posts?_embed&per_page=100&page=1`)
+         res.render('news', { articles : newsAPI.data })
+     } catch (err) {
+         if(err.response) {
+             res.render('news', { articles : null })
+             console.log(err.response.data)
+             console.log(err.response.status)
+             console.log(err.response.headers)
+         } else if(err.request) {
+             res.render('news', { articles : null })
+             console.log(err.requiest)
+         } else {
+             res.render('news', { articles : null })
+             console.error('Error', err.message)
+         }
+     } 
+ })
+
+ newsRouter.get('/category/:cat', async(req, res) => {
+    let cat0 = req.params.cat
+   console.log(cat0);
    try {
-        const newsAPI = await axios.get(`https://diey8xpfs90ha.cloudfront.net/wp-json/wp/v2/posts?_embed&per_page=100&page=1`)
+        const newsAPI = await axios.get(`https://diey8xpfs90ha.cloudfront.net/wp-json/wp/v2/posts?_embed&categories=${cat0}&per_page=100&page=1`)
         res.render('news', { articles : newsAPI.data })
+       
     } catch (err) {
         if(err.response) {
             res.render('news', { articles : null })

@@ -21,6 +21,7 @@ const newsRouter = require('./src/routes/news')
 
 app.use('/', newsRouter)
 app.use('/article', newsRouter)
+app.use('/category', newsRouter)
 
 // Listen on port 5000
 app.listen(port, () => console.log(`Listening on port ${port}`))
